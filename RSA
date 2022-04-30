@@ -1,0 +1,36 @@
+from math import gcd
+def gensimple(n):
+    lst=[2]
+    for i in range(3, n+1, 2):
+        if (i>10)and(i%10==5):
+            continue
+        for j in lst:
+            if j*i-1>i:
+                lst.append(i)
+                break
+            if (i%j==0):
+                break
+            else:
+                lst.append(i)
+    return(lst)
+def fe(ch):
+    print("cjskjcd",ch)
+    count=0
+    for i in range(ch):
+        if (gcd(ch,i)==1):
+            count+=1
+    return(count)
+
+def incode():
+    p1,p2=int(input("введите р1:")),int(input("введите р2:"))
+    lst=[]
+    if p1>=p2:
+        lst.append(gensimple(p1+1))
+    else:
+        lst.append(gensimple(p2))
+    p1,p2=lst[p1],lst[p2]
+    N=p1*p2
+    fepr=(p1-1)*(p2-1)
+    print(fepr)
+    return()
+incode()
