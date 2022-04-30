@@ -3,7 +3,6 @@ dist2={1:'а',2:'б',3:'в',4:'г',5:'д',6:'е',7:'ж',8:'з',9:'и',10:'к',11
 a=[[14,5,13],[1,10,14],[0,13,6]]
 b=[[],[],[]]
 
-
 def matumn(a,b):
     summ=0
     c=[]
@@ -16,8 +15,6 @@ def matumn(a,b):
             c.append(summ)
             summ=0
     return(c)
-
-
 
 def incode(origtext, dist1=dist1, dist2=dist2):
     inctext=[] 
@@ -43,7 +40,6 @@ def incode(origtext, dist1=dist1, dist2=dist2):
     print(bukvtext)
     return()
 
-
 def decode(origtext, dist1=dist1, dist2=dist2):
     dectext=[] 
     listtext=[[[],[],[]] for i in range(int(len(origtext)/3))]
@@ -67,9 +63,6 @@ def decode(origtext, dist1=dist1, dist2=dist2):
             bukvtext+=dist2[dectext[i][j]]
     print(bukvtext)    
     return()
-
-
-
 
 if input("Выберите операцию:  [0]Кодирование    [1]Декодирование  ")=="0":
     s=input("Введите криптоключ  ")
