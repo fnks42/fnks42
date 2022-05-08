@@ -28,6 +28,14 @@ def fe(ch):
             count+=1
     return(count)
 
+def podbor(n,q1,ltext):
+    count=0
+    elem=(ltext**q1)%n
+    while not( elem == ltext):
+        elem=(elem**q1)%n
+        count+=1
+    return(count)
+
 @bot.message_handler(commands=["laba"])
 def laba_choose(message):
     markup1 = types.ReplyKeyboardMarkup()
@@ -43,7 +51,8 @@ def vvod_labs(message):
         otvet=bot.send_message(message.chat.id, "введите данные через пробел")
         bot.register_next_step_handler(otvet, laba71)
     elif laba== "лаба 7.2":
-        otvet=bot.send_message(message.chat.id, "все равно ")
+        otvet72=bot.send_message(message.chat.id, "Ведите q1, N через пробел")
+        bot.register_next_step_handler(otvet72, laba72)
 
 def laba71(otvet):
     dann=str(otvet.text)
@@ -74,8 +83,8 @@ def laba71(otvet):
     bot.send_message(otvet.chat.id, mesq2, parse_mode=None)
     
     rowtext=bot.send_message(otvet.chat.id, "введите текст для декодировки, без фигурных скобочек")
-    bot.register_next_step_handler(rowtext, decode)
-def decode(rowtext):
+    bot.register_next_step_handler(rowtext, decode71)
+def decode71(rowtext):
     dist2={1:'а',2:'б',3:'в',4:'г',5:'д',6:'е',7:'ж',8:'з',9:'и',10:'к',11:'л',12:'м',13:'н',14:'о',15:'п',16:'р',17:'с',18:'т',19:'у',20:'ф',21:'х',22:'ц',23:'ч',24:'ш',25:'щ',26:'ы',27:'ь',28:'э',29:'ю',30:'я',31:'_',0:'_'}
     strtext=rowtext.text
     listtext = list(map(int, strtext.split(",")))
@@ -90,6 +99,42 @@ def decode(rowtext):
         strdectext+=i
     bot.send_message(rowtext.chat.id, strdectext, parse_mode=None)
     
+
+    
+def laba72(otvet72):
+    dann=str(otvet72.text)
+    print(otvet72.text)
+    lst=[]
+    lst.append(dann.split())
+    global q1, n
+    q1,n=lst[0]
+    q1,n=int(q1),int(n)
+    dannprint=f"q1= {q1}, N= {n}"
+    bot.send_message(otvet72.chat.id, dannprint, parse_mode=None)
+    rowtext=bot.send_message(otvet72.chat.id, "введите текст для декодировки, без фигурных скобочек")
+    bot.register_next_step_handler(rowtext, decode72)
+def decode72(rowtext): 
+    dist2={1:'а',2:'б',3:'в',4:'г',5:'д',6:'е',7:'ж',8:'з',9:'и',10:'к',11:'л',12:'м',13:'н',14:'о',15:'п',16:'р',17:'с',18:'т',19:'у',20:'ф',21:'х',22:'ц',23:'ч',24:'ш',25:'щ',26:'ы',27:'ь',28:'э',29:'ю',30:'я',31:'_',0:'_'}
+    strtext=rowtext.text  
+    listtext = list(map(int, strtext.split(",")))
+    print(listtext)
+    dectext=[]
+    elem=listtext[2]
+    stp=podbor(n,q1,elem)
+    for i in listtext:
+        l0=i
+        for _ in range(stp):
+            l0=(l0**q1)%n 
+        dectext.append(dist2[l0])
+    print(dectext)
+    strdectext=""
+    for i in dectext:
+        strdectext+=i
+    bot.send_message(rowtext.chat.id, strdectext, parse_mode=None)
+
+
+
+
 while True:
     try:
         bot.polling(none_stop=True)
